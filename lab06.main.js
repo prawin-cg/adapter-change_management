@@ -190,20 +190,7 @@ healthcheck(callback) {
     if (error) {
       console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
-    else{
-        let body=null;
-        if(typeof data=='object'){
-            console.info(JSON.stringify(data));
-            if (data.body){
-                body=JSON.parse(data.body);
-                let result = body.result;
-                result.forEach((obj, index) => {
-                    result[index] = this.getResult(obj);
-                });
-                callback(result);
-
-            }
-    }
+    console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
   });
   }
 
@@ -227,33 +214,8 @@ healthcheck(callback) {
     if (error) {
       console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
     }
-    else{
-        let result=null;
-        if(typeof data=='object'){
-            console.info(JSON.stringify(data));
-            if (data.body){
-                let body = JSON.parse(data.body);
-                result = body.result;
-                result = this.getResult(result);
-            }
-        }
-        callback(result)
-    }
+    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
   });
-  }
-
-  responseData(result){
-      return{
-          'change_ticket_key': result.sys_id,
-        'change_ticket_number': result.number,
-        'active': result.active,
-        'priority': result.priority,
-        'description': result.description,
-        'work_start': result.work_start,
-        'work_end': result.work_end
-      }
-
-
   }
 }
 
